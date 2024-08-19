@@ -43,6 +43,12 @@ invisibleAPI.unsetInvisible(player, targets);
 invisibleAPI.canSee(player, targets.get(0));
 ```
 
+## Example idea to use this API:
+
+In my case, I used this API to set invisibility for player A only if player B gets too close to him on parkour.
+
+I added glowing for players when they are invisible to add variety to the effect.
+
 ## Gradle:
 
 ```gradle
