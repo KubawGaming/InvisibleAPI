@@ -1,4 +1,4 @@
-# FakeNameAPI
+# InvisibleAPI
 <bold>[![](https://jitpack.io/v/KubawGaming/InvisibleAPI.svg)](https://jitpack.io/#KubawGaming/InvisibleAPI)</bold> <strong>Its project version used in gradle/maven</strong>
 
 <br>
