@@ -3,9 +3,7 @@ package me.kubaw208.invisibleAPI;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import lombok.Getter;
-import me.kubaw208.invisibleAPI.events.ChangeWorldListener;
-import me.kubaw208.invisibleAPI.events.PotionsUpdateListener;
-import me.kubaw208.invisibleAPI.events.QuitListener;
+import me.kubaw208.invisibleAPI.events.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,7 +19,7 @@ public class InvisibleAPI {
         this.plugin = plugin;
         instance = this;
 
-        PacketEvents.getAPI().getEventManager().registerListener(new PotionsUpdateListener(this), PacketListenerPriority.HIGH);
+        PacketEvents.getAPI().getEventManager().registerListener(new InvisibilityUpdateListener(this), PacketListenerPriority.HIGH);
         plugin.getServer().getPluginManager().registerEvents(new QuitListener(this), plugin);
         plugin.getServer().getPluginManager().registerEvents(new ChangeWorldListener(this, plugin), plugin);
     }

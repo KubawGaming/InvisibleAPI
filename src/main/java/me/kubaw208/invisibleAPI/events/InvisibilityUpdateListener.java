@@ -10,11 +10,11 @@ import me.kubaw208.invisibleAPI.InvisibleAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class PotionsUpdateListener implements PacketListener {
+public class InvisibilityUpdateListener implements PacketListener {
 
     private final InvisibleAPI invisibleAPI;
 
-    public PotionsUpdateListener(InvisibleAPI invisibleAPI) {
+    public InvisibilityUpdateListener(InvisibleAPI invisibleAPI) {
         this.invisibleAPI = invisibleAPI;
     }
 
@@ -29,6 +29,14 @@ public class PotionsUpdateListener implements PacketListener {
         if(target == null) return;
         if(!invisibleAPI.getInvisiblePlayers().containsKey(target.getUniqueId())) return;
         if(!invisibleAPI.getInvisiblePlayers().get(target.getUniqueId()).contains(player.getUniqueId())) return;
+
+        //Checking if metadata with index 0 is already added (to not repeating the same metadata in list). If exists - just edit it (add invisible)
+        for(var metaData : packet.getEntityMetadata()) {
+            if(metaData.getIndex() != 0) continue;
+
+            metaData.setValue((byte) metaData.getValue() | 0x20);
+            return;
+        }
 
         packet.getEntityMetadata().add(new EntityData(0, EntityDataTypes.BYTE, (byte) 0x20));
     }
