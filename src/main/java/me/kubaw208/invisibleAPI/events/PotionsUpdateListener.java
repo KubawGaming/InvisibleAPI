@@ -2,33 +2,35 @@ package me.kubaw208.invisibleAPI.events;
 
 import com.github.retrooper.packetevents.event.PacketListener;
 import com.github.retrooper.packetevents.event.PacketSendEvent;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityEffect;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import me.kubaw208.invisibleAPI.InvisibleAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class PotionsUpdateListener implements PacketListener {
 
-    private final InvisibleAPI InvisibleAPI;
+    private final InvisibleAPI invisibleAPI;
 
-    public PotionsUpdateListener(InvisibleAPI InvisibleAPI) {
-        this.InvisibleAPI = InvisibleAPI;
+    public PotionsUpdateListener(InvisibleAPI invisibleAPI) {
+        this.invisibleAPI = invisibleAPI;
     }
 
     @Override
     public void onPacketSend(PacketSendEvent event) {
-        if(event.getPacketType() != PacketType.Play.Server.ENTITY_EFFECT) return;
+        if(event.getPacketType() != PacketType.Play.Server.ENTITY_METADATA) return;
         if(!(event.getPlayer() instanceof Player player)) return;
 
-        var packet = new WrapperPlayServerEntityEffect(event);
+        var packet = new WrapperPlayServerEntityMetadata(event);
+        Player target = getPlayerByEntityID(packet.getEntityId());
 
-        if(!InvisibleAPI.getInvisiblePlayers().containsKey(player.getUniqueId())) return;
-        if(getPlayerByEntityID(packet.getEntityId()) == null) return;
-        if(!InvisibleAPI.getInvisiblePlayers().get(player.getUniqueId()).contains(getPlayerByEntityID(packet.getEntityId()).getUniqueId())) return;
+        if(target == null) return;
+        if(!invisibleAPI.getInvisiblePlayers().containsKey(target.getUniqueId())) return;
+        if(!invisibleAPI.getInvisiblePlayers().get(target.getUniqueId()).contains(player.getUniqueId())) return;
 
-        packet.setVisible(false);
-        packet.setAmbient(false);
+        packet.getEntityMetadata().add(new EntityData(0, EntityDataTypes.BYTE, (byte) 0x20));
     }
 
     /**
