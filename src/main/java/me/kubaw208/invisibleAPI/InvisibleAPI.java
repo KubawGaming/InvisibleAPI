@@ -15,7 +15,7 @@ public class InvisibleAPI {
 
     protected final JavaPlugin plugin;
     @Getter private static InvisibleAPI instance;
-    @Getter private final HashMap<UUID, ArrayList<UUID>> invisiblePlayers = new HashMap<>();
+    @Getter private final HashMap<UUID, ArrayList<UUID>> invisiblePlayers = new HashMap<>(); //Map<Target, List<Receivers>>
 
     public InvisibleAPI(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -110,8 +110,8 @@ public class InvisibleAPI {
      * @returns true if player can see target. Else returns false.
      */
     public boolean canSee(Player player, Player target) {;
-        return invisiblePlayers.get(target.getUniqueId()) != null &&
-                invisiblePlayers.get(target.getUniqueId()).contains(player.getUniqueId());
+        return invisiblePlayers.get(target.getUniqueId()) == null ||
+                !invisiblePlayers.get(target.getUniqueId()).contains(player.getUniqueId());
     }
 
 }
