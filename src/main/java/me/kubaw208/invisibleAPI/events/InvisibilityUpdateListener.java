@@ -34,10 +34,11 @@ public class InvisibilityUpdateListener implements PacketListener {
         for(var metaData : packet.getEntityMetadata()) {
             if(metaData.getIndex() != 0) continue;
 
-            metaData.setValue((byte) metaData.getValue() | 0x20);
+            byte newValue = (byte) ((byte) metaData.getValue() | 0x20);
+
+            metaData.setValue(newValue);
             return;
         }
-
         packet.getEntityMetadata().add(new EntityData(0, EntityDataTypes.BYTE, (byte) 0x20));
     }
 
