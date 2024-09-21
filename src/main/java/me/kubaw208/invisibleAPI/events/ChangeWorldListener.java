@@ -1,6 +1,7 @@
 package me.kubaw208.invisibleAPI.events;
 
 import me.kubaw208.invisibleAPI.InvisibleAPI;
+import me.kubaw208.invisibleAPI.InvisibleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,8 +31,7 @@ public class ChangeWorldListener implements Listener {
             if(target == null) continue;
             if(!target.canSee(player)) continue;
 
-            target.hidePlayer(plugin, player);
-            target.showPlayer(plugin, player);
+            InvisibleUtils.resendEntityMetadata(target, player);
         }
     }
 

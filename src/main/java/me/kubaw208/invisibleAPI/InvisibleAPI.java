@@ -2,8 +2,13 @@ package me.kubaw208.invisibleAPI;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
+import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import lombok.Getter;
 import me.kubaw208.invisibleAPI.events.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,8 +48,7 @@ public class InvisibleAPI {
         for(Player receiver : packetReceivers) {
             if(!receiver.canSee(target)) continue;
 
-            receiver.hidePlayer(plugin, target);
-            receiver.showPlayer(plugin, target);
+            InvisibleUtils.resendEntityMetadata(receiver, target);
         }
     }
 
@@ -79,8 +83,7 @@ public class InvisibleAPI {
 
             if(!receiver.canSee(target)) continue;
 
-            receiver.hidePlayer(plugin, target);
-            receiver.showPlayer(plugin, target);
+            InvisibleUtils.resendEntityMetadata(receiver, target);
         }
     }
 
